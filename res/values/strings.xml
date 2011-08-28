@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">YAViewer</string>
+    <string name="app_name">YAPC::Asia 2011 Viewer</string>
     <string name="api_url">http://yapcasia.org/2011/talk/list.json</string>
 </resources>

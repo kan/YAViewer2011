@@ -52,17 +52,32 @@ public class TalkListAdapter extends BaseAdapter {
         }
     }
 
+    static class ViewHolder {
+        TextView talkName;
+    }
+
     @Override
     public View getView(int position, View view, ViewGroup parent) {
         JSONObject json = (JSONObject) getItem(position);
+        ViewHolder holder;
 
-        view = inflater.inflate(R.layout.talk_list_row, null);
+        if (view == null) {
+            view = inflater.inflate(R.layout.talk_list_row, null);
+            holder = new ViewHolder();
+            holder.talkName = ((TextView) view.findViewById(R.id.talk_name));
+            view.setTag(holder);
+        } else {
+            holder = (ViewHolder) view.getTag();
+        }
+
         try {
-            ((TextView) view.findViewById(R.id.talk_name)).setText(json
-                    .getString("title"));
+            String title = json.getString("title");
+            if ("null".equals(title)) { // suck android json parser
+                title = json.getString("title_en");
+            }
+            holder.talkName.setText(title);
         } catch (JSONException e) {
-            ((TextView) view.findViewById(R.id.talk_name))
-                    .setText(e.toString());
+            holder.talkName.setText(e.toString());
         }
 
         return view;
