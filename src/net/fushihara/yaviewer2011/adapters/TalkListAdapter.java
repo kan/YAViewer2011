@@ -15,29 +15,62 @@ import android.widget.TextView;
 
 public class TalkListAdapter extends BaseAdapter {
 
-    private JSONArray      json;
+    private JSONArray      allTalks;
+    private JSONArray      talks;
     private LayoutInflater inflater;
+    private int            venue;
+    private int            day;
 
     public TalkListAdapter(Context ctx) {
         inflater = (LayoutInflater) ctx
                 .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        json = new JSONArray();
+        allTalks = new JSONArray();
+        talks = new JSONArray();
+        venue = 1;
+        day = 14;
     }
 
     public void setJSON(JSONArray json) {
-        this.json = json;
+        this.allTalks = json;
+        notifyDataSetChanged();
+    }
+
+    public void setVenue(int newVenue) {
+        venue = newVenue;
+        notifyDataSetChanged();
+    }
+
+    public void setDay(int newDay) {
+        day = newDay;
         notifyDataSetChanged();
     }
 
     @Override
+    public void notifyDataSetChanged() {
+        talks = new JSONArray();
+        for (int i = 0; i < allTalks.length(); i++) {
+            try {
+                JSONObject talk = allTalks.getJSONObject(i);
+                if (talk.getJSONObject("venue").getInt("id") == venue
+                        && talk.getString("start_on").startsWith(
+                                String.format("2011-10-%d", day))) {
+                    talks.put(talk);
+                }
+            } catch (JSONException e) {
+            }
+        }
+        super.notifyDataSetChanged();
+    }
+
+    @Override
     public int getCount() {
-        return json.length();
+        return talks.length();
     }
 
     @Override
     public Object getItem(int position) {
         try {
-            return json.getJSONObject(position);
+            return talks.getJSONObject(position);
         } catch (JSONException e) {
             return null;
         }
@@ -46,7 +79,7 @@ public class TalkListAdapter extends BaseAdapter {
     @Override
     public long getItemId(int position) {
         try {
-            return json.getJSONObject(position).getInt("id");
+            return talks.getJSONObject(position).getInt("id");
         } catch (JSONException e) {
             return 0;
         }

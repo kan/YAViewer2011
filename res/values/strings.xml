@@ -2,4 +2,14 @@
 <resources>
     <string name="app_name">YAPC::Asia 2011 Viewer</string>
     <string name="api_url">http://yapcasia.org/2011/talk/list.json</string>
+    <string name="day_14">14日</string>
+    <string name="day_15">15日</string>
+    <string-array name="venues">
+        <item>MainHall</item>
+        <item>CentenialHall</item>
+        <item>KuramaeHall</item>
+        <item>SweetArea</item>
+        <item>RejectConf</item>
+        <item>DigitalHall</item>
+    </string-array>
 </resources>
