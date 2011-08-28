@@ -18,10 +18,15 @@ public class TalkListAdapter extends BaseAdapter {
     private JSONArray      json;
     private LayoutInflater inflater;
 
-    public TalkListAdapter(Context ctx, JSONArray json) {
+    public TalkListAdapter(Context ctx) {
         inflater = (LayoutInflater) ctx
                 .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        json = new JSONArray();
+    }
+
+    public void setJSON(JSONArray json) {
         this.json = json;
+        notifyDataSetChanged();
     }
 
     @Override
